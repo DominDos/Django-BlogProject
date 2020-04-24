@@ -1,0 +1,26 @@
+{% extends 'Blog/base.html' %}
+
+{% block content %}
+<div class = 'container'>
+  <div class="jumbotron">
+
+
+  <h2>Prihlas se!</h2>
+  <br>
+
+  {% if form.errors %}
+    <p>Spatny UDAJE. Zkus to znovu!</p>
+  {% endif %}
+
+  <form action="{% url 'login' %}" method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input class="btn btn-primary" type="submit" name="" value="Prihlasit se">
+    <input type="hidden" name="next" value="{{next}}">
+  </form>
+
+  </div>
+</div>
+
+
+{% endblock %}

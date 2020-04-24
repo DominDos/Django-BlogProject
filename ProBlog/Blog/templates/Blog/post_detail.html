@@ -1,0 +1,48 @@
+{% extends "Blog/base.html" %}
+{% block content %}
+  <h1>{{post.title}}</h1>
+  {% if post.published_date %}
+    <div class="">
+      {{ post.published_date }}
+    </div>
+  {% else %}
+    <a href="{% url 'post_publish' pk=post.pk %}">Zverejneno: </a>
+  {% endif %}
+    <p class = 'postcontent'> {{post.text|safe|linebreaksbr}}</p>
+
+  {% if user.is_authenticated %}
+    <!-- EDIT -->
+    <a href="{% url 'post_edit' pk=post.pk %}">
+      <span>  </span>
+    </a>
+    <!-- REMOVE -->
+    <a href="{% url 'post_remove' pk=post.pk %}">
+      <span>  </span>
+    </a>
+  {% endif %}
+  <hr>
+  <!-- ADD COMMENT -->
+  <a href="{% url 'add_comment_to_post' pk=post.pk %}">Napis koment:</a>
+  <div class="">
+    {% for comment in post.comments.all %}
+    <br>
+      {% if user.is_authenticated or comments.approve_comment %}
+        {{comments.create_date}}
+          {% if not comments.approve_comment %}
+          <a href="{% url 'comment_remove' pk=comments.pk %}">
+            <span>NO</span>
+          </a>
+          <a href="{% url 'comment_approve' pk=comments.pk %}">
+            <span>OK</span>
+          </a>
+          {% endif %}
+          <p>{{comments.text|safe|linebreaks}}</p>
+          <p>Autor: {{comment.author}}</p>
+      {% endif %}
+      {% empty %}
+      <p>Bez komentare</p>
+    {% endfor %}
+
+  </div>
+
+{% endblock %}

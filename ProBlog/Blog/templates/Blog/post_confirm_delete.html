@@ -1,0 +1,10 @@
+{% extends "Blog/base.html" %}
+{% block content %}
+  <form  action="index.html" method="POST">
+    {% csrf_token %}
+    <p>SES SI JISTEJ ZE {{ object }} CHCES VYMAZAT ????</p>
+    <input type="submit" name="" value="Potvrd">
+  </form>
+
+
+{% endblock %}
